@@ -1,0 +1,45 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET		/							controllers.Application.home()
+GET		/login						controllers.Application.login()
+GET		/logout						controllers.Application.logout()
+GET		/authenticate				controllers.Application.authenticate()
+GET		/signup						controllers.Application.signup()
+GET		/createNewUser				controllers.Application.createNewUser()
+GET		/createSuccess				controllers.Application.createSuccess()
+POST	/isEmailExisted				controllers.Application.isEmailExisted()
+ 
+# Climate Service
+GET		    /climateService/allServices									controllers.ClimateServiceController.showAllClimateServices()
+POST		/climateService/add											controllers.ClimateServiceController.addClimateService()
+GET     	/climateService/addAClimateService          				controllers.ClimateServiceController.addAClimateService()
+POST		/climateService/savePage									controllers.ClimateServiceController.passPageStr()
+POST		/assets/html/climateService/serviceModels					controllers.ClimateServiceController.serviceModels()
+POST		/climateService/serviceModels								controllers.ClimateServiceController.serviceModels()
+POST		/climateService/ruleEngineData								controllers.ClimateServiceController.ruleEngineData()
+GET     	/climateService/mostPopularServices							controllers.ClimateServiceController.mostPopularServices()
+GET		    /climateService/mostRecentlyUsedClimateServices				controllers.ClimateServiceController.mostRecentlyUsedClimateServices()
+GET		    /climateService/mostRecentlyAddedClimateServices			controllers.ClimateServiceController.mostRecentlyAddedClimateServices()
+GET		    /climateService/searchClimateService 					 	controllers.ClimateServiceController.searchClimateServices()
+GET 	    /climateService/getSearchResult				    			controllers.ClimateServiceController.getSearchResult()
+ 
+# Users
+GET		/scientist/allUsers							controllers.UsersController.getAllUsers()
+GET		/scientist/searchUser 					 	controllers.UsersController.searchUser()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+POST    /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+# About
+GET     /aboutUs					controllers.AboutController.aboutUs()
+GET     /aboutProject				controllers.AboutController.aboutProject()
+GET		/tutorial					controllers.AboutController.tutorial()
+GET		/FAQs						controllers.AboutController.FAQs()
+GET   	/scienceUseCase      		controllers.AboutController.scienceUseCase()
+
+ 
