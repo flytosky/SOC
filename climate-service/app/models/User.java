@@ -25,7 +25,7 @@ public class User {
 	private String researchFields;
 	private String highestDegree;
 	private boolean unreadMention;
- 
+
 	private String avatar;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "Followers", joinColumns = { @JoinColumn(name = "userId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "followerId", referencedColumnName = "id") })
@@ -97,12 +97,13 @@ public class User {
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName,
+	public User(long id, String userName, String password, String firstName,
 			String lastName, String middleInitial, String affiliation,
 			String title, String email, String mailingAddress,
 			String phoneNumber, String faxNumber, String researchFields,
 			String highestDegree) {
 		super();
+		this.id = id;
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
@@ -216,6 +217,10 @@ public class User {
 
 	public void setFaxNumber(String faxNumber) {
 		this.faxNumber = faxNumber;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setResearchFields(String researchFields) {
