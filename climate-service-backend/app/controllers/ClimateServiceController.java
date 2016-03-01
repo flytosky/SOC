@@ -13,8 +13,7 @@ import java.util.List;
 import models.*;
 import util.Common;
 import util.Constants;
-import workflow.VisTrailJson;
-import play.mvc.*;
+import play.mvc.*; 
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,11 +43,10 @@ public class ClimateServiceController extends Controller {
 	@Inject
 	public ClimateServiceController(
 			final ClimateServiceRepository climateServiceRepository,
-			UserRepository userRepository,ServiceEntryRepository serviceEntryRepository) {
+			UserRepository userRepository) {
 		this.climateServiceRepository = climateServiceRepository;
 		this.userRepository = userRepository;
-        this.serviceEntryRepository = serviceEntryRepository;
-	}
+ 	}
 
 	public Result addClimateService() {
 		JsonNode json = request().body().asJson();
@@ -83,8 +81,7 @@ public class ClimateServiceController extends Controller {
 			ClimateService savedClimateService = climateServiceRepository
 					.save(climateService);
 			String registerNote = "ClimateService Name: " + savedClimateService.getName() + ", VersionNo: "+versionNo;
-			ServiceEntry serviceEntry = new ServiceEntry(createTime, versionNo, user, createTime, registerNote, initialcount, savedClimateService);
-			serviceEntryRepository.save(serviceEntry);
+ 
 			System.out.println("Climate Service saved: "
 					+ savedClimateService.getName());
 			return created(new Gson().toJson(savedClimateService.getId()));
@@ -93,6 +90,22 @@ public class ClimateServiceController extends Controller {
 			System.out.println("Climate Service not saved: " + name);
 			return badRequest("Climate Service not saved: " + name);
 		}
+	}
+
+	public Result getAllClimateServices(String format) {
+		Iterable<ClimateService> climateServices = climateServiceRepository
+				.findAll();
+		if (climateServices == null) {
+			System.out.println("No climate service found");
+		}
+
+		String result = new String();
+		if (format.equals("json")) {
+			result = new Gson().toJson(climateServices);
+		}
+
+		return ok(result);
+
 	}
 	 
 	public Result deleteClimateServiceById(long id) {
@@ -105,18 +118,6 @@ public class ClimateServiceController extends Controller {
 		climateServiceRepository.delete(climateService);
 		System.out.println("Climate service is deleted: " + id);
 		return ok("Climate service is deleted: " + id);
-	}
-	
-	public Result deleteClimateServiceByName(String name) {
-		ClimateService climateService = climateServiceRepository.findFirstByName(name);
-		if (climateService == null) {
-			System.out.println("Climate service not found with name: " + name);
-			return notFound("Climate service not found with name: " + name);
-		}
-
-		climateServiceRepository.delete(climateService);
-		System.out.println("Climate service is deleted: " + name);
-		return ok("Climate service is deleted: " + name);
 	}
  
 }
